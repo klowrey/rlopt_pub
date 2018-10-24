@@ -13,6 +13,13 @@ julia> simulate("/tmp/npg_test") # press ',' or '.' to change visualization mode
 julia> simulate("/tmp/opt_test")
 ```
 
+# Structure
+
+The general structure of the code is organized around experiments in their own directories (ant, hopper, humanoid, etc). The experiments create functions that return model / strategies that are used by LearningStrategies.jl to learn according to either trajectory optimization or Natural Policy Gradients. Top level code is under OptTrain.jl or PGTrain.jl, which use modules under opt/ or pg/, respectively. All experiment / model specific behavior is defined as per experiment directories: a primary file that includes a functions file; the visualization looks specifically for a \*functions.jl file for interactive policy rendering.
+
+TODO:
+Fix interactive policy rendering.
+
 # Install
 
 MuJoCo.jl is needed to use this, and must be cloned from source.
