@@ -15,7 +15,7 @@ julia> simulate("/tmp/opt_test")
 
 # Structure
 
-The general structure of the code is organized around experiments in their own directories (ant, hopper, humanoid, etc). The experiments create functions that return model / strategies that are used by [LearningStrategies.jl](https://github.com/JuliaML/LearningStrategies.jl) to learn according to either trajectory optimization or Natural Policy Gradients. Top level code is under OptTrain.jl or PGTrain.jl, which use modules under opt/ or pg/, respectively. All experiment / model specific behavior is defined as per experiment directories: a primary file that includes a functions file; the visualization looks specifically for a \*functions.jl file for interactive policy rendering.
+The general structure of the code is organized around experiments in their own directories (ant, hopper, humanoid, etc). The experiments create functions that return model / strategies that are used by [LearningStrategies.jl](https://github.com/JuliaML/LearningStrategies.jl) to learn according to either [trajectory optimization](https://arxiv.org/pdf/1707.02342.pdf) or [Natural Policy Gradients](https://papers.nips.cc/paper/2073-a-natural-policy-gradient.pdf). Top level code is under OptTrain.jl or PGTrain.jl, which use modules under opt/ or pg/, respectively. All experiment / model specific behavior is defined as per experiment directories: a primary file that includes a functions file; the visualization looks specifically for a \*functions.jl file for interactive policy rendering.
 
 TODO:
 Fix interactive policy rendering.
