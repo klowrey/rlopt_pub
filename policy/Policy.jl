@@ -7,7 +7,7 @@ module Policy
 # and Gaussian Radial Basis Function Policy
 # types
 
-using JLD2
+using JLD2, FileIO
 using ReverseDiff
 using Flux
 using Flux: TrackedVector

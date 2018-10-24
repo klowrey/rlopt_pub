@@ -14,12 +14,12 @@ function rewardfunction(x::mjWrap.mjSet,
                         o0::AbstractVector{Float64}, # observations
                         o1::AbstractVector{Float64},
                         ctrl::AbstractVector{Float64}) # and controls
-    pos0 = s0[1]
-    pos1 = s1[1]
+    #pos0 = s0[1]
+    vel1 = s1[x.m.m[].nq + 1]
     height = s1[2]
     angle = s1[3]
 
-    reward = (pos1 - pos0) / (x.dt*x.skip) # forward x direction
+    reward = vel1 #/ (x.dt*x.skip) # forward x direction
 
     upright_bonus = 3.0
     t_height = 0.8
@@ -27,7 +27,7 @@ function rewardfunction(x::mjWrap.mjSet,
         reward += upright_bonus
     end
     #reward -= upright_bonus * (height - t_height)^2
-    reward -= 1e-2 * sum(ctrl.^2)
+    reward -= 1e-4 * sum(ctrl.^2)
 
     return reward
 end
@@ -50,7 +50,6 @@ function initfunction!(x::mjWrap.mjSet,
     sTemp = zeros(nq+nv)
     c = zeros(nu)
     o = zeros(ns)
-    tid = 1
 
     diverse = true #false
 
@@ -63,9 +62,9 @@ function initfunction!(x::mjWrap.mjSet,
             init_state[2,t]    = s0[2]   +rand()  * 0.1 # - 0.05
             init_state[3,t]    = s0[3]   +rand()  * angle - angle/2.0
 
-            mjWrap.reset(x, tid, init_state[:,t], c, o)
+            mjWrap.reset(x, init_state[:,t], c, o)
             for i=1:50
-                mjWrap.step!(x, tid, c, sTemp, o)
+                mjWrap.step!(x, c, sTemp, o)
             end
 
             if (init_state[2,t] < 1)

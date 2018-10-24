@@ -63,7 +63,7 @@ mutable struct Simulation
       new(0.0, 0.0, false, false, false, GLFW.MOUSE_BUTTON_1, 0.0,
           0, 0, false, false, false, false, false, true, true, 0,
           nothing, #open("/tmp/test.bin","w"),
-          Vector{UInt8}(5120 * 2880 * 3),
+          Vector{UInt8}(undef, 5120 * 2880 * 3),
           0, 0,
           Ref(mjvScene()),
           Ref(mjvCamera()),

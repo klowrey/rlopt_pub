@@ -14,7 +14,7 @@ my_mjsys       = mjw.load_model(model_file, myskip, "normal")
 
 function getNPG()
     T = 800
-    K = 16 #64
+    K = 32 #64
     niter = 80
     gamma = 0.995
     gae = 0.98
@@ -27,7 +27,6 @@ function getNPG()
     cg_reg = 1e-6
     cg_tol = 1e-10
 
-
     my_policy      = Policy.GLP{dtype}(my_mjsys.ns, my_mjsys.nu) # inputs: n, m
     #my_policy      = Policy.NN{dtype}(my_mjsys.ns, my_mjsys.nu, 32) # inputs: n, m
 
@@ -37,8 +36,8 @@ function getNPG()
                                      T, K, T, 10, niter)
 
     # NPG baseline aka value function approximation
-    #baseline    = Baseline.Quadratic{Float64}(1e-5, my_mjsys.ns, T, K)
-    baseline    = Baseline.NN{Float64}(my_mjsys.ns, T, K, 128, 0.001, Baseline.getNNfeatures2)
+    baseline    = Baseline.Quadratic{Float64}(1e-5, my_mjsys.ns, T, K)
+    #baseline    = Baseline.NN{Float64}(my_mjsys.ns, T, K, 128, 0.001, Baseline.getNNfeatures)
 
     pg_specs   = NPGStrategy{dtype}(pgmodel,
                                     baseline,
@@ -58,7 +57,6 @@ function getOpt()
 
     opt   = TrajOptModel(my_mjsys, H, T, opt_K;
                          theta = zeros(my_mjsys.nu, H)#,
-                         #s0 = vcat(LAYING_QPOS, zeros(my_mjsys.nv))
                          #s0 = [my_mjsys.d.qpos; my_mjsys.d.qvel]
                         )
 

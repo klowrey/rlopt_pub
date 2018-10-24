@@ -125,13 +125,13 @@ end
 function gettimefeatures!(feat::Array{DT,3}) where DT<:AbstractFloat
     T    = size(feat, 2)
     K = size(feat, 3)
-    al = convert(Array{DT}, linspace(1, T, T)') / DT(T)
+    al = convert(Array{DT}, linspace(1, T, T)') ./ DT(T)
     for t=1:K
         feat[end-4,:,t] = al
         feat[end-3,:,t] = al.^2
         feat[end-2,:,t] = al.^3
         feat[end-1,:,t] = al.^4
-        feat[end,:,t]   = DT(1.0)
+        feat[end,:,t]   .= DT(1.0)
     end
 end
 
