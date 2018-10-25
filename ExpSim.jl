@@ -312,6 +312,7 @@ function loadmodel(modelfile, width, height)
    ptr_m = mj_loadXML(modelfile, C_NULL)
    ptr_d = mj_makeData(ptr_m)
    m, d = mj.mapmujoco(ptr_m, ptr_d)
+   mj_forward(m, d)
    s = Sim.start(m, d, width, height)
    @info("Model file: $modelfile")
 
@@ -338,7 +339,7 @@ end
 
 function simulate(s, exd::Union{ExpDisplay,Nothing})
    # Loop until the user closes the window
-   Sim.autoscale(s)
+   Sim.alignscale(s)
    while !GLFW.WindowShouldClose(s.window)
       render(s, exd, s.window)
       GLFW.PollEvents()
